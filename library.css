@@ -30,11 +30,14 @@ button {
 ul {
     list-style: none;
     width: 80%;
-    margin: 0 auto;
+    margin: 10px auto 0;
     padding: 0;
 }
 li {
     text-decoration: none;
     display: flex;
     justify-content: space-between;
+}
+li p {
+    margin: 5px;
 }

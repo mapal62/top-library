@@ -1,7 +1,16 @@
 console.log('connected');
 const myLibrary = [];
+const loadTest = document.querySelector('.test');
+const newBook = document.querySelector('#book');
 const bookList = document.querySelector('.bookList');
 
+
+const testData = [
+    ['A háromtest-probléma', 'Cixin Liu', 201, false],
+    ['A sötét erdő', 'Cixin Liu', 202, false],
+    ['A halál vége', 'Cixin Liu', 203, true],
+    ['Kritikus rendszerhiba', 'Martha Wells', 100, false]
+]
 function capitalize(anyText) {
     let capitalized;
     let newItem;
@@ -10,7 +19,7 @@ function capitalize(anyText) {
     textArray.forEach(item => {
         newItem = item[0].toUpperCase() + item.slice(1);
         newArray.push(newItem);
-});
+    });
     capitalized = newArray.join(' ');
     return capitalized;
 }
@@ -40,12 +49,18 @@ function newLine(element) {
     let newLine = document.createElement('li');
     newLine.innerHTML = `
     <p>${element.info()}</p>
-    <p><input type='checkbox'></p>
+    <p><input type='checkbox' ${element.read ? 'checked' : ''}></p>
     `;
     bookList.appendChild(newLine);
 
 }
-const newBook = document.querySelector('#book');
+loadTest.addEventListener('click', () => {
+    console.log('TEST clicked');
+    testData.forEach(item => {
+        myLibrary.push(addBookToLibrary(item[0], item[1], item[2], item[3]));
+    });
+    myLibrary.forEach(item => newLine(item));
+});
 newBook.addEventListener('submit', (e) => {
     e.preventDefault();
     myLibrary.push(addBookToLibrary(e.target.title.value, e.target.author.value, e.target.pages.value, false));
