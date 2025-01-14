@@ -1,8 +1,9 @@
 console.log('connected');
-const myLibrary = [];
+let myLibrary = [];
 const loadTest = document.querySelector('.test');
 const newBook = document.querySelector('#book');
 const bookList = document.querySelector('.bookList');
+const reload = document.querySelector('.reload');
 
 
 const testData = [
@@ -45,29 +46,59 @@ function listLibrary() {
         console.log(element.info());
     });
 }
-function newLine(element) {
+function newLine(element, whichOne = '-1') {
     let newLine = document.createElement('li');
+    newLine.addEventListener('click', selectedLine);
     newLine.innerHTML = `
+    
     <p>${element.info()}</p>
-    <p><input type='checkbox' ${element.read ? 'checked' : ''}></p>
+    
+    <p data-whichone="${whichOne}">
+    <input class="toggleread" title="Toggle read" type='checkbox' ${element.read ? 'checked' : ''}>
+    <img class="removebook" title="Remove from library" src="./images/trash-can-outline.svg" alt="">
+    </p>
     `;
     bookList.appendChild(newLine);
 
 }
 loadTest.addEventListener('click', () => {
     console.log('TEST clicked');
+    myLibrary = [];
     testData.forEach(item => {
         myLibrary.push(addBookToLibrary(item[0], item[1], item[2], item[3]));
     });
-    myLibrary.forEach(item => newLine(item));
+    bookList.replaceChildren();
+    myLibrary.forEach((item, whichOne) => newLine(item, whichOne));
 });
 newBook.addEventListener('submit', (e) => {
     e.preventDefault();
-    myLibrary.push(addBookToLibrary(e.target.title.value, e.target.author.value, e.target.pages.value, false));
-    newLine(myLibrary[myLibrary.length - 1]);
+    myLibrary.push(addBookToLibrary(e.target.title.value, e.target.author.value, e.target.pages.value, e.target.read.checked));
+    newLine(myLibrary[myLibrary.length - 1], (myLibrary.length - 1));
     listLibrary();
     e.target.title.value = '';
     e.target.author.value = '';
     e.target.pages.value = '';
+    e.target.read.checked = false;
+});
+reload.addEventListener('click', () => {
+    console.log('RELOAD clicked');
+    bookList.replaceChildren();
+    myLibrary.forEach((item, whichOne) => newLine(item, whichOne));
+
 });
 
+function selectedLine(e) {
+    const whichData = parseInt(e.target.parentElement.dataset.whichone);
+    console.log(e.target);
+    console.log(e.target.parentElement.dataset.whichone, whichData);
+    if (e.target.classList.contains('toggleread')) {
+        myLibrary[whichData].read = !myLibrary[whichData].read;
+
+    }
+    if (e.target.classList.contains('removebook')) {
+        myLibrary.splice(whichData, 1);
+    }
+    bookList.replaceChildren();
+    myLibrary.forEach((item, whichOne) => newLine(item, whichOne));
+
+}

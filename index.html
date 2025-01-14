@@ -11,30 +11,33 @@
 <body>
     <div class="container">
         <button class="test">Load TEST data</button>
+        <button class="reload">Reload library</button>
         <form id="book" action="">
 
             <div class="row">
                 <label for="title">Title</label>
-                <input type="text" name="title">
+                <input type="text" name="title" required>
             </div>
 
             <div class="row">
                 <label for="title">Author</label>
-                <input type="text" name="author">
+                <input type="text" name="author" aria-required="">
             </div>
 
             <div class="row">
-                <label for="title">No of pages</label><input type="number" name="pages">
+                <label for="title">No of pages</label>
+                <input type="number" name="pages" required>
             </div>
 
             <div class="row">
                 <label for="title">Already read</label>
-                <input type="checkbox" name="read">
+                <input type="checkbox" name="read" value="1">
             </div>
             <button class="add">Enter Book</button>
         </form>
         <ul class="bookList">
             <li>
+                <img src="./images/trash-can-outline.svg" alt="">
                 <p>Title</p>
                 <p>Author</p>
                 <p>Pages</p>
