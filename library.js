@@ -24,18 +24,34 @@ function capitalize(anyText) {
     capitalized = newArray.join(' ');
     return capitalized;
 }
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.info = function () {
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+    /* function Book(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+     */
+    info() {
         let bookInfo = capitalize(this.title);
         bookInfo += ` <em>by</em> ${capitalize(this.author)},`;
         bookInfo += ` ${this.pages} pages, `;
         bookInfo += this.read ? 'you have read.' : 'not read yet.';
         return bookInfo;
     }
+    /*     this.info = function () {
+            let bookInfo = capitalize(this.title);
+            bookInfo += ` <em>by</em> ${capitalize(this.author)},`;
+            bookInfo += ` ${this.pages} pages, `;
+            bookInfo += this.read ? 'you have read.' : 'not read yet.';
+            return bookInfo;
+        }
+    */
 }
 function addBookToLibrary(title, author, pages, read) {
     return new Book(title, author, pages, read);
